@@ -13,7 +13,7 @@ always_ff @( posedge clk ) begin : blockName
     else
     begin
         count <= count +1;
-        if (count == 25000000 -1)
+        if (count == 50000000 -1)
         begin
             clk_out <= ~clk_out;
             count <= 0;

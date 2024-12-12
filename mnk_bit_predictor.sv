@@ -14,16 +14,16 @@ module mnk_bit_predictor #(parameter K = 4,
     // Predict based on the current counter value
     assign new_index = {bhr_in,index};
 
+    assign prediction = pht[new_index][N-1];
     always_ff @(posedge clk , posedge reset) begin
         if (reset) begin
             for (int i = 0; i < (1<<K)*(1<<M); i++)
                 pht[i] <= 0; // Initialize counters to not taken
         end
         else begin
-            prediction <= pht[new_index][N-1];
             if (branch_outcome) begin
                 // Increment counter
-                if (pht[new_index] + 1 != 0)
+                if (~(&pht[new_index]))
                     pht[new_index] <= pht[new_index] + 1;
             end
             else begin

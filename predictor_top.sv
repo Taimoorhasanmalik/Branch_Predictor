@@ -1,4 +1,4 @@
-module predictor_top #(parameter M = 2, parameter K = 4, parameter N = 2) (
+module predictor_top #(parameter M = 4, parameter K = 8, parameter N = 3) (
     input logic clk,
     input logic reset,
     input logic [K-1:0] index,
@@ -7,8 +7,8 @@ module predictor_top #(parameter M = 2, parameter K = 4, parameter N = 2) (
     output logic success
 );
     logic [M-1:0] bhr_out;     // Output from BHR
-    logic clk_out;
-    // Instantiate BHR
+    logic clk_out ;
+    Instantiate BHR
     clk_div ck(.clk(clk),.reset(reset),.clk_out(clk_out));
     branch_history_register #(M) bhr_inst (
         .clk(clk_out),
@@ -27,7 +27,7 @@ module predictor_top #(parameter M = 2, parameter K = 4, parameter N = 2) (
         .branch_outcome(branch_outcome),
         .prediction(prediction)
     );
-    always@(*)  begin
+    always_comb  begin
         if (prediction == branch_outcome)
         begin success = 1; end
         else begin
