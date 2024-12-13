@@ -1,4 +1,4 @@
-module clk_div (
+module clk_div #(parameter DIV) (
     input logic clk,reset,
     output logic clk_out
 );
@@ -13,7 +13,7 @@ always_ff @( posedge clk ) begin : blockName
     else
     begin
         count <= count +1;
-        if (count == 50000000 -1)
+        if (count == DIV -1)
         begin
             clk_out <= ~clk_out;
             count <= 0;
